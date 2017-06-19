@@ -1,12 +1,13 @@
 
 const path = require('path');
 const webpack = require('webpack');
+const DotenvPlugin = require('webpack-dotenv-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 // App files location
 const PATHS = {
-  root: path.resolve(__dirname, '../'),
+  root: path.resolve(__dirname, '../src'),
   app: path.resolve(__dirname, '../src/js'),
   styles: path.resolve(__dirname, '../src/styles'),
   build: path.resolve(__dirname, '../build'),
@@ -21,6 +22,10 @@ const GLOBALS = {
 };
 
 const plugins = [
+  new DotenvPlugin({
+    sample: path.resolve(PATHS.root, '../.env.default'),
+    path: path.resolve(PATHS.root, '../.env.prod'),
+  }),
   new webpack.optimize.CommonsChunkPlugin({
     name: 'vendor',
     filename: 'js/vendor.bundle.js',

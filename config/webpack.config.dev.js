@@ -1,3 +1,4 @@
+
 const path = require('path');
 const webpack = require('webpack');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
@@ -20,6 +21,10 @@ const GLOBALS = {
 };
 
 const plugins = [
+  new DotenvPlugin({
+    sample: path.resolve(PATHS.root, '../.env.default'),
+    path: path.resolve(PATHS.root, '../.env'),
+  }),
   new webpack.optimize.CommonsChunkPlugin({
     name: 'vendor',
     filename: 'js/vendor.bundle.js',
@@ -28,11 +33,7 @@ const plugins = [
   new webpack.DefinePlugin(GLOBALS),
   new webpack.HotModuleReplacementPlugin(),
   new ExtractTextPlugin('assets/styles-dev.css'),
-  new DotenvPlugin({
-    sample: path.resolve(PATHS.root, '../.env.default'),
-    path: path.resolve(PATHS.root, '../.env'),
-  }),
-  new DashboardPlugin(),
+  new DashboardPlugin({ port: 3333 }),
 ];
 
 module.exports = {
