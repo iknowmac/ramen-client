@@ -1,13 +1,11 @@
 import * as types from '../constants';
 import fetch from 'isomorphic-fetch';
 
-const api = `${process.env.API_HOST}:${process.env.API_PORT}`;
-
 // fetch actions.
 export function fetchTasks() {
   return (dispatch) => {
     dispatch(fetchTasksRequest());
-    return fetch(`http://${api}/tasks`)
+    return fetch(`${process.env.API_URL}/tasks`)
     .then((res) => res.json())
     .then((json) => dispatch(fetchTasksSuccess(json)))
     .catch((err) => dispatch(fetchTasksError(err)));
@@ -38,7 +36,7 @@ export function fetchTasksError(error) {
 export function updateTasks(attrs) {
   return (dispatch) => {
     dispatch(updateTasksRequest());
-    return fetch(`http://${api}/tasks/${attrs._id}`, {
+    return fetch(`${process.env.API_URL}/tasks/${attrs._id}`, {
       method: 'put',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ task: attrs }),
@@ -73,7 +71,7 @@ export function updateTasksError(error) {
 export function deleteTasks(attrs) {
   return (dispatch) => {
     dispatch(deleteTasksRequest());
-    return fetch(`http://${api}/tasks/${attrs._id}`, {
+    return fetch(`${process.env.API_URL}/tasks/${attrs._id}`, {
       method: 'delete',
       headers: { 'Content-Type': 'application/json' },
     })
@@ -107,7 +105,7 @@ export function deleteTasksError(error) {
 export function createTasks(attrs) {
   return (dispatch) => {
     dispatch(createTasksRequest());
-    return fetch(`http://${api}/tasks`, {
+    return fetch(`${process.env.API_URL}/tasks`, {
       method: 'post',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ task: { name: attrs.name } }),

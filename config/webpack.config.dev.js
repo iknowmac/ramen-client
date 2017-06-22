@@ -22,7 +22,7 @@ const GLOBALS = {
 
 const plugins = [
   new DotenvPlugin({
-    sample: path.resolve(PATHS.root, '../.env.default'),
+    sample: path.resolve(PATHS.root, '../.env.sample'),
     path: path.resolve(PATHS.root, '../.env'),
   }),
   new webpack.optimize.CommonsChunkPlugin({
