@@ -1,7 +1,8 @@
 
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+import PropTypes from 'prop-types';
 
 import * as task_actions from '../actions/task_actions';
 import { TasksIndex } from '../components';

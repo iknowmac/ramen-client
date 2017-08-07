@@ -3,7 +3,8 @@
 import { createStore, applyMiddleware, compose } from 'redux';
 import rootReducer from '../reducers';
 import thunkMiddleware from 'redux-thunk';
-import createLogger from 'redux-logger';
+import { createLogger } from 'redux-logger';
+import * as ReduxImmutableStateInvariant from 'redux-immutable-state-invariant';
 
 export default function configureStore(initialState) {
   const logger = createLogger({ collapsed: true });
@@ -19,7 +20,7 @@ export default function configureStore(initialState) {
 
   if (process.env.NODE_ENV !== 'production') {
     let middlewares = [
-      require('redux-immutable-state-invariant')(),
+	  ReduxImmutableStateInvariant.default(),
       thunkMiddleware,
       logger
     ];
@@ -34,8 +35,8 @@ export default function configureStore(initialState) {
   const store = createStore(rootReducer, initialState, enhancer);
 
   if (module.hot) {
-    module.hot.accept('../reducers', () =>
-      store.replaceReducer(require('../reducers').default)
+	module.hot.accept(rootReducer, () =>
+	  store.replaceReducer(rootReducer.default)
     );
   }
 
